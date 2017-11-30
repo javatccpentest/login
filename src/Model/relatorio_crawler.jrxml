@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba3539f6-a55e-459f-a449-b0dcce6e2ca8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Z:\\TCC\\login\\build\\classes\\Model\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dominio_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select webpage.URL,webpage.id,dominio.DOMINIO, webpage_off.url AS page_off from webpage
+inner join dominio on webpage.DOMINIO_ID = dominio.id
+inner join webpage_off on webpage_off.id_webpage = webpage.id
+where dominio.id = 94
+order by webpage.URL, page_off]]>
+	</queryString>
+	<field name="URL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DOMINIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="page_off" class="java.lang.String"/>
+	<variable name="URL_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{URL}]]></variableExpression>
+	</variable>
+	<group name="URLs">
+		<groupExpression><![CDATA[$F{URL}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<textField>
+					<reportElement x="0" y="0" width="555" height="24" uuid="f2437833-8f59-4dee-9029-c5cf1c0909c8"/>
+					<box>
+						<pen lineStyle="Dashed"/>
+						<topPen lineStyle="Dashed"/>
+						<leftPen lineStyle="Dashed"/>
+						<bottomPen lineStyle="Dashed"/>
+						<rightPen lineStyle="Dashed"/>
+					</box>
+					<textElement>
+						<font size="16" isBold="true" isItalic="true" isUnderline="true" isStrikeThrough="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{URL}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="244" height="43" uuid="273c6235-0b96-4bb7-96b8-c5c9efdaeea6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOMINIO}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="172" y="59" width="100" height="20" uuid="5f5d3575-3d88-4870-9004-c9c3c82cd25e"/>
+				<textFieldExpression><![CDATA[$V{URL_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="59" width="172" height="20" uuid="2e3dfc18-3ff6-47f5-a363-e6a458b085e4"/>
+				<text><![CDATA[Numero de Paginas encontradas :]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="941968cf-d6cd-44f4-afa8-695f28c27d4e"/>
+				<text><![CDATA[URL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="24" width="555" height="0" isPrintWhenDetailOverflows="true" uuid="d4542470-0e1e-4ca5-ad42-5d931c6e5085"/>
+				<subreportParameter name="webpage_url">
+					<subreportParameterExpression><![CDATA[$F{URL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "relatorio_crawler_erro_encontrado.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="0" y="4" width="555" height="20" uuid="cc16de35-fcdc-4f84-ae13-c38d395bf885"/>
+				<textFieldExpression><![CDATA[$F{page_off}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
